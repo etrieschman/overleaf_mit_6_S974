@@ -1,0 +1,78 @@
+\documentclass[11pt]{exam}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{optidef}
+\usepackage{listings}
+\usepackage{xcolor} % for custom colors
+\usepackage{minted} % for code
+
+% === Make things tighter ===
+\usepackage[margin=0.75in]{geometry} % <- widen/narrow by changing 1.25in
+\usepackage{setspace}
+% \setstretch{0.95} % line spacing
+\usepackage{enumitem}
+% \setlist{nosep}  % removes vertical space around lists
+% \setlist[itemize]{topsep=3pt, itemsep=3pt, parsep=1pt, partopsep=0pt}
+% \setlist[enumerate]{topsep=3pt, itemsep=3pt, parsep=1pt, partopsep=0pt}
+\usepackage{titlesec}
+% \titlespacing*{\section}{0pt}{4.0ex plus 0.5ex minus 0.5ex}{0.8ex}
+% \titlespacing*{\subsection}{0pt}{3.0ex plus 0.3ex minus 0.3ex}{0.6ex}
+% \titlespacing*{\subsubsection}{0pt}{2.0ex plus 0.2ex minus 0.2ex}{0.4ex}
+% \titlespacing*{\paragraph}{0pt}{1.5ex plus 0.2ex minus 0.2ex}{0.4ex}
+
+
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  stringstyle=\color{red},
+  commentstyle=\color{gray},
+  showstringspaces=false,
+  frame=single,
+  breaklines=true
+}
+\title{6.S974 Games, Learning, and Security}
+\author{Erich Trieschman}
+\date{\today}
+\begin{document}
+\maketitle
+
+\begin{questions}
+    \question \textbf{Relief logistics.}
+    \begin{parts}
+        \part \textit{Min-cost flow problem.}
+        \part \textit{Fully loaded containers.}
+        \part \textit{Extreme events.}
+        \part \textit{In code.}
+    \end{parts}
+    
+
+    \question \textbf{Security Inspections in a Shared Building}
+    \begin{parts}
+        \part \textit{Strictly dominated actions.}
+        \part \textit{Pure strategy Nash equilibria.}
+        \part \textit{Nash equilibria with randomizations.}
+        \part \textit{Correlated equilibria.}
+        \part \textit{Building manager announces both recommendations.}
+    \end{parts}
+
+    \question \textbf{Human-AI Delegation.}
+    \begin{parts}
+        \part \textit{Extensive form game tree.}
+        \part \textit{Pure strategies and subgame perfect equilibria.}
+        \part \textit{Strategic form payoff matrix}
+        \part \textit{Perfect subgame Nash equilibria?}
+        \part \textit{Thinking after review and subgame perfect equilibria.}
+    \end{parts}
+
+    \question \textbf{Autonomous pricing.}
+    \begin{parts}
+        \part \textit{Strategic form game.}
+        \part \textit{Subgame perfect equilibria.}
+        \part \textit{New strategy profile.}
+        \part \textit{Permanent punishment.}
+    \end{parts}
+    
+\end{questions}
+\end{document}

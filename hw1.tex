@@ -451,12 +451,103 @@ print("Total expected welfare:", np.round(ep_A + ep_B, 2))
 
     \end{parts}
 
-    \question \textbf{Autonomous pricing.} \todo{Not covered yet.}
+    \question \textbf{Autonomous pricing.}
     \begin{parts}
-        \part \textit{Strategic form game.}
-        \part \textit{Subgame perfect equilibria.}
-        \part \textit{New strategy profile.}
-        \part \textit{Permanent punishment.}
+        \part \textit{Strategic form game.} 
+        In any period $t\in[1,T]$ the strategic form game with per-period profit is
+
+        \begin{tabular}{r|cc}
+            \textbf{(A,B)} & \textbf{\$10} & \textbf{\$8} \\
+            \hline
+            \textbf{\$10} & (3,3) & (0,4) \\
+            \textbf{\$8} & (4,0) & (2,2) \\
+        \end{tabular}
+        \begin{itemize}
+            \item \textbf{Pure strategy Nash equilibria:} $s^* = (\$8, \$8)$. For seller A the \$8 offer strictly dominates the \$10 offer ($4>3$ when seller B offers \$10; $2>0$ when seller B offers \$8). The symmetric argument holds for seller B. 
+            \item \textbf{Mixed strategy Nash equilibria:} None exist.
+            \begin{itemize}
+                \item As noted above, both players have a strictly dominated strategy, so against any pure strategy, the other player has a unique best response. So any mixed strategy requires both players to randomize. 
+                \item Next suppose there exists a mixed strategy Nash equilibrium $(\sigma^*_A, \sigma^*_B)$. Then
+                \begin{align*}
+                    \operatorname{supp}(\sigma^*_A) = \{\$10, \$8\} \subseteq BR_A(\sigma^*_B) 
+                    &\implies u_A(\$10, \sigma^*_B) = u_A(\$8, \sigma^*_B)\\
+                    &\implies \mathbb E_{s_B \sim \sigma_B^*}[u_A(\$10, s_B)] = \mathbb E_{s_B \sim \sigma_B^*}[u_A(\$8, s_B)]\\
+                    &\implies 3\cdot(1 - \sigma_B^*(\$8)) + 0\cdot\sigma_B^*(\$8) = 4\cdot(1 - \sigma_B^*(\$8)) + 2\cdot\sigma_B^*(\$8)\\
+                    &\implies \sigma^*_B(\$8) = -1
+                \end{align*}
+                A contradiction since we require $\sigma^*_B(\$8)\in(0,1)$. So there is no mixed strategy Nash equilibrium.
+                \item This can also be seen by noting that strict dominance against every pure strategy implies strict dominance against any mixture, i.e., $u_A(\$8, \sigma^*_B) > u_A(\$10,\sigma^*_B)\;\forall\;\sigma^*_B$.
+            \end{itemize}
+        \end{itemize}
+
+
+
+        \part \textit{Finite game subgame perfect equilibria.} 
+        Let $s^* = (\$8, \$8)_{t\in[1,T]}$ be the strategy profile where both sellers offer \$8 after every history.
+        \begin{itemize}
+            \item By Part (a), $s^* = (\$8, \$8)$ is a unique pure equilibrium to the stage game, and no mixed equilibrium exists.
+            \item By class theorem, if a stage game has a unique Nash equilibrium $a^*$, then its finitely repeated version has a unique SPE, in which players choose $a^*$ in every period regardless of the history. Hence $s^*$ is the unique SPE.
+            \item This theorem holds for any finite $T$ and any $\delta\in(0,1)$, so equilibrium behavior does not depend on these values.
+            \item In this equilibrium each seller earns 2 per period, so each seller's total discounted payoff is $g(s^*_i) = \sum_{t=1}^{T} \delta^{t-1}\cdot 2$.
+        \end{itemize}
+
+
+        \part \textit{Infinite game strategy profile.}
+        A strategy profile $s^*$ is an SPE if and only if no player can gain by deviating from $s^*$ in a single stage and conforming to $s^*$ thereafter. 
+
+        Consider seller A choosing deviation at time $\bar t$; assume $s^*_B$. Everything before $\bar t$ is equivalent between comply and deviation so we ignore it. For each state, seller A's payoffs by choice (comply, deviate) and the no-deviation condition are below
+        \begin{table}[h!]
+        \centering
+        \begin{tabular}{l|lll}
+            \textbf{Current state} & \textbf{Comply} & \textbf{Deviate} & \textbf{Condition} \\
+            \hline
+            \textbf{No punishment} 
+                & $\sum_{t=\bar t}^\infty 3\delta^{t-1}$ 
+                & $4\delta^{\bar t-1} + \sum_{t=\bar t+1}^{\bar t+2} 2\delta^{t-1} + \sum_{t=\bar t+3}^\infty 3\delta^{t-1}$
+                & $\delta^2 + \delta - 1 \geq 0$ \\
+            \textbf{Two punishment} 
+                & $\sum_{t=\bar t}^{\bar t+1} 2\delta^{t-1} + \sum_{t=\bar t+2}^\infty 3\delta^{t-1}$  
+                & $0\delta^{\bar t-1} + \sum_{t=\bar t+1}^{\bar t+2} 2\delta^{t-1} + \sum_{t=\bar t+3}^\infty 3\delta^{t-1}$ 
+                & $\delta^2 +2 \geq 0$\\
+            \textbf{One punishment} 
+                & $2\delta^{\bar t-1} + \sum_{t=\bar t+1}^\infty 3\delta^{t-1}$  
+                & $0\delta^{\bar t-1} + \sum_{t=\bar t+1}^{\bar t+2} 2\delta^{t-1} + \sum_{t=\bar t+3}^\infty 3\delta^{t-1}$
+                & $\delta^2 + \delta + 2 \geq 0$
+        \end{tabular}
+        \end{table}
+        Looking more closely at these no-deviation conditions:
+        \begin{itemize}
+            \item No punishment ($\delta^2 + \delta - 1 \geq 0$) is satisfied for $\delta \notin (\tfrac{-1-\sqrt5}{2}, \tfrac{-1+\sqrt5}{2} )$ and $\delta \in (0,1)$. Together this requirement is $\delta \in [\tfrac{-1+\sqrt5}{2}, 1)$
+            \item Two punishment ($\delta^2 +2 \geq 0$) is satisfied for all $\delta \in \mathbb R$ and therefore all $\delta \in(0,1)$.
+            \item One punishment ($\delta^2 + \delta + 2 \geq 0$) is satisfied for all $\delta\in\mathbb R$ and therefore all $\delta \in(0,1)$.
+        \end{itemize}
+        Seller A has no incentive to deviate from the strategy profile under the conditions above. By symmetry, the same holds for seller B. So this strategy profile is an SPE when $\delta \in [\tfrac{-1+\sqrt5}{2}, 1)$.
+
+        At the threshold value $\delta = \tfrac{-1+\sqrt5}{2}$, seller $i$ is indifferent between complying and deviating from the no-punishment state so this value still permits the SPE. Neither seller ever has an incentive to deviate from the two-punishment and one-punishment states. 
+
+
+
+        \part \textit{Permanent punishment.} Following the template of above
+        \begin{table}[h!]
+        \centering
+        \begin{tabular}{l|lll}
+            \textbf{Current state} & \textbf{Comply} & \textbf{Deviate} & \textbf{Condition} \\
+            \hline
+            \textbf{No punishment} 
+                & $\sum_{t=\bar t}^\infty 3\delta^{t-1}$ 
+                & $4\delta^{\bar t-1} + \sum_{t=\bar t+1}^{\infty} 2\delta^{t-1}$
+                & $\delta \geq \frac{1}{2}$ \\
+            \textbf{Permanent punishment} 
+                & $\sum_{t=\bar t}^{\infty} 2\delta^{t-1}$  
+                & $0\delta^{\bar t-1} + \sum_{t=\bar t+1}^{\infty} 2\delta^{t-1}$ 
+                & $2 \geq 0$\\
+        \end{tabular}
+        \end{table}
+        \begin{itemize}
+            \item No punishment is satisfied for $\delta \geq \frac{1}{2}$ and $\delta \in (0,1)$. Together this requirement is $\delta \in [\frac{1}{2}, 1)$.
+            \item Permanent punishment is satisfied trivially ($2\geq 0$) and therefore for all $\delta \in(0,1)$.
+        \end{itemize}
+        This strategy profile permits an SPE for $\delta \in [\frac{1}{2}, 1)$. Comparing to Part(c), $\tfrac{-1+\sqrt5}{2} > \frac{1}{2}$, so the range of discount factors for permanent punishment strategy profile than for the two-one-no punishment strategy profile. \todo{explain the difference} \todo{explain why neither punishment rule can sustain \$10 when there is a commonly known finite final period}
     \end{parts}
     
 \end{questions}

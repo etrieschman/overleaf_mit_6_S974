@@ -88,7 +88,7 @@
                 b = [-20, -70, 0, 40, 60, -10],\quad
                 c = [300,300,150,500,230,150,110,140, 0, 0]
             \end{align*}
-            \item Integrality theorem says min-cost flow problem admits an integer optimal solution if i) the problem has an optimal and ii) $(b, u)\in \mathcal Z^{|n|\cdot|f|}$. Our problem satisfies i) as seen in part (d) and ii) since $b\in\mathcal Z^{|n|}$ is satisfied after problem scaling and since flows are only restricted to be nonnegative.
+            \item Integrality theorem says min-cost flow problem admits an integer optimal solution if i) the problem has an optimal and ii) $(b, u)\in \mathbb Z^{|n|}\times \mathbb Z^{|f|}$. Our problem satisfies i) as seen in part (d) and ii) since $b\in\mathbb Z^{|n|}$ is satisfied after problem scaling and since flows are only restricted to be nonnegative.
             \item An integer solution after scaling represents a solution in increments of 10, i.e., fully loaded containers.
         \end{enumerate}
 
@@ -98,7 +98,7 @@
         \begin{align*}
             \max \Big\{1 - \tfrac{x_{c1}}{500}, 1 - \tfrac{x_{c2}}{700}\Big\}.
         \end{align*}
-        Then we introduce epigraph variable $z$ to reformulate the maximum in the objective as epigraph constraints. Finally, we add additional constraints on the shipment budget and capacitated frlows from the warehouse to community 1. The final linear program is
+        Then we introduce epigraph variable $z$ to reformulate the maximum in the objective as epigraph constraints. We add additional constraints on the shipment budget and capacitated flows from the warehouse to community 1. We also drop the surplus node and corresponding constraints. The final linear program is
         \begin{align*}
             \min_{f,\mathcolor{red}{x, z}}\quad& \mathcolor{red}{z}\\
             \text{s.t.}\quad& 
@@ -245,11 +245,11 @@ print("Unused supply (D1, D2):", np.round(b_c[3:] - inj[3:].value, 2))
     \begin{parts}
         \part \textit{Strictly dominated actions.} For both companies, choosing to inspect the lobby $L$ strictly dominates choosing to inspect their own storage room $S_i$. By symmetry, we only need to look at company A and can extrapolate to B:
         \begin{align*}
-            u_A(L, O_B) = 3 > 1 = u_A(S_A, O_B), \quad
+            u_A(L, O_B) = 3 > 2 = u_A(S_A, O_B), \quad
             u_A(L, L) = 5 > 4 = u_A(S_A, L), \quad
             u_A(L, S_B) = 3 > 2 = u_A(S_A, S_B).
         \end{align*}
-        A strictly dominated strategy can be dropped from our analysis, so we can drop choice $S_i$ for both companies.
+        A strictly dominated strategy can be dropped from our analysis since it is never played in a pure or mixed Nash equilibrium, so we can drop choice $S_i$ for both companies. We do this for all subsequent parts of this problem. 
 
 
         \part \textit{Pure strategy Nash equilibria.} There are two pure strategy Nash equilibria $(s_A, s_B) \in \{(L, O_B), (O_A, L)\}$. Payoffs are $(3,6)$ and $(6,3)$ respectively.
@@ -290,7 +290,7 @@ print("Unused supply (D1, D2):", np.round(b_c[3:] - inj[3:].value, 2))
             \item Equilibrium: no player gains by deviating from their recommendation, given the other follows theirs in probability
             \begin{align*}
             \sum_{s_B\in S_B} \pi(s_A, s_B)[u_A(s_A, s_B) - u_A(s'_A, s_B)]\geq 0,\quad\forall\;s_A, s'_A\in S_A\\
-            \sum_{s_A\in S_A} \pi(s_A, s_B)[u_B(s_B, s_A) - u_B(s'_B, s_A)]\geq 0,\quad\forall\;s_B, s'_B\in S_B
+            \sum_{s_A\in S_A} \pi(s_A, s_B)[u_B(s_A, s_B) - u_B(s_A, s'_B)]\geq 0,\quad\forall\;s_B, s'_B\in S_B
             \end{align*}
             \item Joint distribution: nonnegativity of probabilities, and probabilities sum to 1
             \begin{align*}
@@ -391,7 +391,7 @@ print("Total expected welfare:", np.round(ep_A + ep_B, 2))
         \begin{figure}[htbp]
             \centering
             \includegraphics[width=0.6\textwidth]{hw1_problem3_parta.png}
-            \caption{Problem 3 Part (a) directed network drawing}
+            \caption{Problem 3 Part (a) Extensive form game tree}
             \label{fig:3-a}
         \end{figure}
 
@@ -447,7 +447,7 @@ print("Total expected welfare:", np.round(ep_A + ep_B, 2))
         \end{align*}
         So $(R, T)$ is the SPE with payoffs $(11, 11)$. The SPE is unique because no payoff was a tie. Both players benefit relative to ($A, TI$) in Part(b) (Alice: $10\to11$; BobGPT: $6\to11$).
 
-        A non-binding promise of BobGPT to use Thinking after Review would not sustain this outcome: Under Alice's choice of Review, BobGPT's choice of Instant dominates Thinking ($12>11$). And anticipating BobGPT's choice of Instant after Review, Alice's choice of Ask dominates her choice of Review ($10>7$). 
+        A non-binding promise of BobGPT to use Thinking after Review would not sustain this outcome: Under Alice's choice of Review, BobGPT's choice of Instant is a best response ($12>11$). And anticipating BobGPT's choice of Instant after Review, Alice's choice of Ask is a best response ($10>7$). 
 
     \end{parts}
 
@@ -488,7 +488,7 @@ print("Total expected welfare:", np.round(ep_A + ep_B, 2))
             \item By Part (a), $s^* = (\$8, \$8)$ is a unique pure equilibrium to the stage game, and no mixed equilibrium exists.
             \item By class theorem, if a stage game has a unique Nash equilibrium $a^*$, then its finitely repeated version has a unique SPE, in which players choose $a^*$ in every period regardless of the history. Hence $s^*$ is the unique SPE.
             \item This theorem holds for any finite $T$ and any $\delta\in(0,1)$, so equilibrium behavior does not depend on these values.
-            \item In this equilibrium each seller earns 2 per period, so each seller's total discounted payoff is $g(s^*_i) = \sum_{t=1}^{T} \delta^{t-1}\cdot 2$.
+            \item In this equilibrium each seller earns 2 per period, so each seller's total discounted payoff is $g_i(s^*) = \sum_{t=1}^{T} \delta^{t-1}\cdot 2$.
         \end{itemize}
 
 
@@ -515,7 +515,7 @@ print("Total expected welfare:", np.round(ep_A + ep_B, 2))
                 & $\delta^2 + \delta + 2 \geq 0$
         \end{tabular}
         \end{table}
-        Looking more closely at these no-deviation conditions:
+        This analysis covers all histories because each history leads to these three states for different $\bar t$. Looking more closely at these no-deviation conditions:
         \begin{itemize}
             \item No punishment ($\delta^2 + \delta - 1 \geq 0$) is satisfied for $\delta \notin (\tfrac{-1-\sqrt5}{2}, \tfrac{-1+\sqrt5}{2} )$ and $\delta \in (0,1)$. Together this requirement is $\delta \in [\tfrac{-1+\sqrt5}{2}, 1)$
             \item Two punishment ($\delta^2 +2 \geq 0$) is satisfied for all $\delta \in \mathbb R$ and therefore all $\delta \in(0,1)$.
@@ -547,7 +547,11 @@ print("Total expected welfare:", np.round(ep_A + ep_B, 2))
             \item No punishment is satisfied for $\delta \geq \frac{1}{2}$ and $\delta \in (0,1)$. Together this requirement is $\delta \in [\frac{1}{2}, 1)$.
             \item Permanent punishment is satisfied trivially ($2\geq 0$) and therefore for all $\delta \in(0,1)$.
         \end{itemize}
-        This strategy profile permits an SPE for $\delta \in [\frac{1}{2}, 1)$. Comparing to Part(c), $\tfrac{-1+\sqrt5}{2} > \frac{1}{2}$, so the range of discount factors for permanent punishment strategy profile than for the two-one-no punishment strategy profile. \todo{explain the difference} \todo{explain why neither punishment rule can sustain \$10 when there is a commonly known finite final period}
+        This strategy profile permits an SPE for $\delta \in [\frac{1}{2}, 1)$. Comparing to Part(c), $\tfrac{-1+\sqrt5}{2} > \frac{1}{2}$, so the range of discount factors for permanent punishment strategy profile is larger than for the short-term punishment strategy profile. 
+        
+        Why? In both cases, deviating once gives you a one-period payment of 4 and then payments of 2 for the next two periods. The difference between the strategy profiles is what happens from the third period onward: the short punishment returns to an infinite stream of 3, while the permanent punishment stays at 2. The deviator's payoffs are lower under permanent punishment (deviating is more costly) so the seller needs a higher discount (lower delta) on the future to be willing to deviate.
+        
+        Neither rule can sustain (\$10,\$10) in a finite game, by the proof in Part(b). This can also be seen clearly by applying the one-shot deviation test to the final period $T$. There's no threat of punishment in this interval so deviating to \$8 pays \$1 at no cost and is the best response; this is a deviation from both proposed strategies. 
     \end{parts}
     
 \end{questions}
